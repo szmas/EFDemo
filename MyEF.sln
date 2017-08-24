@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEF", "MyEF\MyEF.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "实体关系", "实体关系\实体关系.csproj", "{AA4DC694-CD45-401A-BAF6-89B6B6234DC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneToOne", "ConsoleApplication1\OneToOne.csproj", "{78068F42-85D9-4C48-A604-3090E2673BD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneToOne", "OneToOne\OneToOne.csproj", "{78068F42-85D9-4C48-A604-3090E2673BD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
