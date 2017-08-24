@@ -39,12 +39,22 @@ namespace MyEF
         /// <param name="context"></param>
         protected override void Seed(MasDBContext context)
         {
-            context.PayWays.AddRange(new List<PayWay>
+            var payway = new List<PayWay>
                                     {
                                         new PayWay{Name = "支付宝"},
                                         new PayWay{Name = "微信"},
                                         new PayWay{Name = "QQ红包"}
-                                    });
+                                    };
+            context.PayWays.AddRange(payway);
+
+            context.Donators.AddRange(new List<Donator>
+                                        {
+                                            new Donator
+                                            {
+                                                Amount =6,Name = "键盘里的鼠标",DonateDate =DateTime.Parse("2016-4-13"),
+                                                PayWays = payway
+                                            }     
+                                        });
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace MyEF
         static void Main(string[] args)
         {
 
-            SetInitializer();
+            CRUD.Run();
 
         }
 
@@ -49,33 +50,15 @@ namespace MyEF
                 //Deleted，Added，Modified和Unchanged
 
             }
-        }
 
-        /// <summary>
-        /// 查询记录——YCSelect
-        /// </summary>
-        public static void YCSelect()
-        {
-            //延迟查询
-            #region 2.0 查询记录
-
-            using (MasDBContext db = new MasDBContext())
+            //将DbContext转换成ObjectContext
+            using (var db = new MasDBContext())
             {
-                var donators = db.Donators;
-
-                //只有当LINQ的查询结果被访问或者枚举时才会将查询命令发送到数据库。
-                //EF是基于Dbset实现的IQueryable接口来处理延迟查询的。
-
-                Console.WriteLine("Id\t\t姓名\t\t金额\t\t赞助日期");
-                foreach (var donator in donators)
-                {
-                    Console.WriteLine("{0}\t\t{1}\t\t{2}\t\t{3}", donator.DonatorId, donator.Name, donator.Amount, donator.DonateDate.ToShortDateString());
-                }
+                var objectContext = (db as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext;
             }
-
-            #endregion
-
         }
+
+
 
 
         /// <summary>
@@ -109,7 +92,7 @@ namespace MyEF
                     }
                 };
 
-                db.Donators.AddRange(donators);
+                db.Donators.AddRange(donators);//批量数据插入
                 db.SaveChanges();
 
                 //方法将更改提交到数据库，
@@ -118,65 +101,92 @@ namespace MyEF
 
             }
 
+
+
+            using (var db = new MasDBContext())
+            {
+                var donators = new List<Donator>
+                {
+                    new Donator
+                    {
+                      Name   = "陈志康",
+                      Amount = 50,
+                      DonateDate = new DateTime(2016, 4, 7)
+                    },
+                    new Donator
+                    {
+                        Name = "海风",
+                        Amount = 5,
+                        DonateDate = new DateTime(2016, 4, 8)
+                    },
+                    new Donator
+                    {
+                        Name = "醉千秋",
+                        Amount = 18.8m,
+                        //DonateDate = new DateTime(2016, 4, 15)   一条语句有问题，所有语句都回滚
+                    }
+                };
+
+                //将donators添加到DbEntityEntry中，并将State状态设置为 Added
+                db.Entry(donators).State = EntityState.Added;
+
+                db.SaveChanges();
+
+            }
+
+
+
+
+
             Console.Write("DB has Created!");//提示DB创建成功
             Console.Read();
         }
 
 
 
-
-
-
         /// <summary>
-        /// 更新记录——Update
+        /// 异步操作
         /// </summary>
-        public static void Update()
+        private async static void InsertAsync()
         {
 
-            using (MasDBContext db = new MasDBContext())
+            using (var db = new MasDBContext())
             {
-
-                #region 3.0 更新记录
-
-                var donators = db.Donators;
-                if (donators.Any())
+                var donators = new List<Donator>
                 {
-                    var toBeUpdatedDonator = donators.First(d => d.Name == "醉千秋");
-                    toBeUpdatedDonator.Name = "醉、千秋";
-                    db.SaveChanges();
-                }
+                    new Donator
+                    {
+                      Name   = "陈志康",
+                      Amount = 50,
+                      DonateDate = new DateTime(2016, 4, 7)
+                    },
+                    new Donator
+                    {
+                        Name = "海风",
+                        Amount = 5,
+                        DonateDate = new DateTime(2016, 4, 8)
+                    },
+                    new Donator
+                    {
+                        Name = "醉千秋",
+                        Amount = 18.8m,
+                        //DonateDate = new DateTime(2016, 4, 15)   一条语句有问题，所有语句都回滚
+                    }
+                };
 
-                #endregion
+                //将donators添加到DbEntityEntry中，并将State状态设置为 Added
+                db.Entry(donators).State = EntityState.Added;
+
+                int result = await db.SaveChangesAsync();//支持异步操作
             }
-
         }
 
 
 
-        /// <summary>
-        /// 删除记录——Delete
-        /// </summary>
-
-        public static void Delete()
-        {
 
 
-            using (MasDBContext db = new MasDBContext())
-            {
 
-                #region 4.0 删除记录
 
-                var toBeDeletedDonator = db.Donators.Single(d => d.Name == "待打赏");//根据Name找到要删除的测试数据
-                if (toBeDeletedDonator != null)
-                {
-                    db.Donators.Remove(toBeDeletedDonator);//如果满足条件，就将该对象使用Remove方法标记为Deleted
-                    db.SaveChanges();//最后持久化到数据库
-                }
 
-                #endregion
-
-            }
-
-        }
     }
 }

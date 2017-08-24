@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MyEF
 {
     [Table("Donator")]
-    class Donator
+    public class Donator
     {
 
 
@@ -41,5 +41,7 @@ namespace MyEF
         public string Name { get; set; }
         public decimal Amount { get; set; }
         public DateTime DonateDate { get; set; }
+
+        public virtual ICollection<PayWay> PayWays { get; set; }
     }
 }
