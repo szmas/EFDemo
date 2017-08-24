@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "实体关系", "实体关�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneToOne", "OneToOne\OneToOne.csproj", "{78068F42-85D9-4C48-A604-3090E2673BD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneToMany", "OneToMany\OneToMany.csproj", "{B459E79F-B46F-4A98-85FF-6A0A1B7E07C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManyToMany", "ManyToMany\ManyToMany.csproj", "{75A868BE-A453-4B66-96A8-645D05662E27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{78068F42-85D9-4C48-A604-3090E2673BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78068F42-85D9-4C48-A604-3090E2673BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78068F42-85D9-4C48-A604-3090E2673BD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B459E79F-B46F-4A98-85FF-6A0A1B7E07C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B459E79F-B46F-4A98-85FF-6A0A1B7E07C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B459E79F-B46F-4A98-85FF-6A0A1B7E07C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B459E79F-B46F-4A98-85FF-6A0A1B7E07C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75A868BE-A453-4B66-96A8-645D05662E27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75A868BE-A453-4B66-96A8-645D05662E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75A868BE-A453-4B66-96A8-645D05662E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75A868BE-A453-4B66-96A8-645D05662E27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

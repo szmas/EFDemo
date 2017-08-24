@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace OneToOne
 {
+
     class Program
     {
         static void Main(string[] args)
         {
+
+            /*
+             
+             * 一对一的实现：既可以把表A的主键充当表B的外键，也可以把表B的主键充当表A的外键
+             
+             
+             */
 
             using (MasContext db = new MasContext())
             {
