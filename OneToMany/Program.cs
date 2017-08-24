@@ -21,6 +21,31 @@ namespace OneToMany
 
         static void Main(string[] args)
         {
+            using (MasContext db = new MasContext())
+            {
+
+                var type = new ProductType()
+                {
+                    Name = "饮料",
+                    Rand = 1.2M,
+                    AddTime = DateTime.Now
+                };
+
+                db.ProductType.Add(type);
+
+                db.Product.Add(new Product()
+                {
+                    Name = "百事可乐",
+                    Price = 6,
+                    IsHot = true,
+                    AddTime = DateTime.Now,
+                    proType = type
+                });
+
+
+                db.SaveChanges();
+
+            }
         }
     }
 }

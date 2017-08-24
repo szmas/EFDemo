@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemoAttribute.cs" />
     <Compile Include="MasContext.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Person.cs" />

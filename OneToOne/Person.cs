@@ -11,10 +11,11 @@ namespace OneToOne
     public class Person
     {
         [Key]
-        [ForeignKey("Student")]//外键
+        //[ForeignKey("Student")]//外键
         public int PersonId { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public virtual Student Student { get; set; }
+
     }
 }
