@@ -29,8 +29,14 @@ namespace OneToOne
                 ForeignKey：指定一个导航属性的外键属性
                 NotMapped：指定该属性不应该映射到数据库中的任何列
                 DatabaseGenerated：指定属性应该映射到数据表中计算的列。也可以用于映射到自动增长的数据库表。
-         * 
-         * 
+                ConcurrencyCheck   标编辑或删除实体时，标记用于在数据库中进行并发检查的一个或多个属性
+                InverseProperty---当两个类之间有多个关系时使用。
+                ComplexType---将类标记为EF中的复杂类型 
+                Index---创建指定列的索引（EF 6.1+） IsClustered 聚簇索引 IsUnique 唯一索引
+                Required---必填
+                MinLength---最小长度
+                MaxLength---最大长度，也是设置数据库列的最大长度
+                StringLength---字符串长度
          * 
          */
 
@@ -49,8 +55,8 @@ namespace OneToOne
          * 
          */
 
-        [Key]//主键 默认设置为自动增长
-
+        [Key]//主键 默认设置为自动增长   默认为 "Id" or {Class Name} + "Id"
+        //[Index("Demo_Index", IsClustered = true, IsUnique = true)]//创建指定列的索引
         [Column("ID")]//映射到数据表中的列名
         public string ID { get; set; }
 
@@ -70,6 +76,7 @@ namespace OneToOne
         //当EF执行更新操作的时候，Code-First将列的值放在where条件语句中，
         //你可以使用这个CurrencyCheck特性，使用已经存在的列做并发检查
         [ConcurrencyCheck]
+        [Index("Demo_Name", IsUnique = true)]
         public string Name { get; set; }
 
         /// <summary>
