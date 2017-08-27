@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,17 +16,20 @@ namespace Test
         {
             //Database.SetInitializer(new DropCreateDatabaseAlways<MasContext>());
 
-
-            /*
-            db.Demo.Add(new Demo()
+            using (MasContext db = new MasContext())
             {
-                ID = 1,
-                AddTime = DateTime.Now,
-                M = 12.22M,
-                Name = "mass",
-            });
-            db.SaveChanges();
-            */
+
+                db.Demo.Add(new Demo()
+                {
+                    ID = 1,
+                    AddTime = DateTime.Now,
+                    M = 12.22M,
+                    Name = "mas" + new Random().Next(),
+                });
+                db.SaveChanges();
+
+            }
+
 
 
             Task t = new Task(() =>
@@ -35,7 +39,32 @@ namespace Test
                     var info = db.Demo.FirstOrDefault();
                     info.M = new Random().Next(1, 1000);
 
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+
+                        #region 2.1 数据库优先方式
+                        //原理是在出现异常的时候，重新加载数据库中的数据，覆盖Context本地数据
+                        /*
+                        ex.Entries.Single().Reload();
+                        db.SaveChanges();
+                         * 
+                         */
+                        #endregion
+
+
+                        #region 2.2 客户端优先方式
+                        //以Context保存的客户端数据为主，覆盖数据库中的数据
+                        var entry = ex.Entries.Single();
+                        entry.OriginalValues.SetValues(entry.GetDatabaseValues());
+                        db.SaveChanges();
+                        #endregion
+
+                    }
+
                 }
             });
 
@@ -46,7 +75,18 @@ namespace Test
                     var info = db.Demo.FirstOrDefault();
                     info.M = new Random().Next(1, 1000);
 
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+
+                        var entry = ex.Entries.Single();
+                        entry.OriginalValues.SetValues(entry.GetDatabaseValues());
+                        db.SaveChanges();
+                    }
+
                 }
             });
 
