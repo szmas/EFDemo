@@ -15,6 +15,12 @@ namespace MyEF
 
         }
 
+        public MasDBContext(string connection) :
+            base(connection)
+        {
+           
+        }
+
         public DbSet<Donator> Donators { get; set; }
         public DbSet<PayWay> PayWays { get; set; }
 
