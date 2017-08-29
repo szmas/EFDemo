@@ -12,15 +12,11 @@ namespace Test
     using System;
     using System.Collections.Generic;
     
-    public partial class 组
+    public partial class StudentAddress
     {
-        public 组()
-        {
-            this.用户 = new HashSet<用户>();
-        }
+        public int Id { get; set; }
+        public string Name { get; set; }
     
-        public string 组1 { get; set; }
-    
-        public virtual ICollection<用户> 用户 { get; set; }
+        public virtual Student Student { get; set; }
     }
 }

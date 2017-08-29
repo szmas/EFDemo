@@ -12,16 +12,16 @@ namespace Test
     using System;
     using System.Collections.Generic;
     
-    public partial class 物料类型
+    public partial class ProductType
     {
-        public 物料类型()
+        public ProductType()
         {
-            this.物料资料 = new HashSet<物料资料>();
+            this.Product = new HashSet<Product>();
         }
     
-        public string 物料类型1 { get; set; }
-        public int ID { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual ICollection<物料资料> 物料资料 { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/29/2017 13:42:21
+-- Date Created: 08/29/2017 14:04:23
 -- Generated from EDMX file: F:\C#\基础知识\MyEF\Test\MYEF.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,11 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_ProductProductType]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Product] DROP CONSTRAINT [FK_ProductProductType];
-GO
 IF OBJECT_ID(N'[dbo].[FK_StudentStudentAddress]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Student] DROP CONSTRAINT [FK_StudentStudentAddress];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProductProductType]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Product] DROP CONSTRAINT [FK_ProductProductType];
 GO
 
 -- --------------------------------------------------
@@ -51,32 +51,58 @@ GO
 -- Creating table 'Product'
 CREATE TABLE [dbo].[Product] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [ProductTypeId] int  NOT NULL
+    [Name] nvarchar(max)  NOT NULL,
+    [ProductType_Id] int  NOT NULL
 );
 GO
 
 -- Creating table 'ProductType'
 CREATE TABLE [dbo].[ProductType] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
 -- Creating table 'Student'
 CREATE TABLE [dbo].[Student] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
     [StudentAddress_Id] int  NOT NULL
 );
 GO
 
 -- Creating table 'StudentAddress'
 CREATE TABLE [dbo].[StudentAddress] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
 -- Creating table 'Person'
 CREATE TABLE [dbo].[Person] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'Course'
+CREATE TABLE [dbo].[Course] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'Score'
+CREATE TABLE [dbo].[Score] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'CourseScore'
+CREATE TABLE [dbo].[CourseScore] (
+    [Course_Id] int  NOT NULL,
+    [Score_Id] int  NOT NULL
 );
 GO
 
@@ -114,24 +140,27 @@ ADD CONSTRAINT [PK_Person]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [Id] in table 'Course'
+ALTER TABLE [dbo].[Course]
+ADD CONSTRAINT [PK_Course]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Score'
+ALTER TABLE [dbo].[Score]
+ADD CONSTRAINT [PK_Score]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Course_Id], [Score_Id] in table 'CourseScore'
+ALTER TABLE [dbo].[CourseScore]
+ADD CONSTRAINT [PK_CourseScore]
+    PRIMARY KEY CLUSTERED ([Course_Id], [Score_Id] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
-
--- Creating foreign key on [ProductTypeId] in table 'Product'
-ALTER TABLE [dbo].[Product]
-ADD CONSTRAINT [FK_ProductProductType]
-    FOREIGN KEY ([ProductTypeId])
-    REFERENCES [dbo].[ProductType]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ProductProductType'
-CREATE INDEX [IX_FK_ProductProductType]
-ON [dbo].[Product]
-    ([ProductTypeId]);
-GO
 
 -- Creating foreign key on [StudentAddress_Id] in table 'Student'
 ALTER TABLE [dbo].[Student]
@@ -146,6 +175,45 @@ GO
 CREATE INDEX [IX_FK_StudentStudentAddress]
 ON [dbo].[Student]
     ([StudentAddress_Id]);
+GO
+
+-- Creating foreign key on [ProductType_Id] in table 'Product'
+ALTER TABLE [dbo].[Product]
+ADD CONSTRAINT [FK_ProductProductType]
+    FOREIGN KEY ([ProductType_Id])
+    REFERENCES [dbo].[ProductType]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ProductProductType'
+CREATE INDEX [IX_FK_ProductProductType]
+ON [dbo].[Product]
+    ([ProductType_Id]);
+GO
+
+-- Creating foreign key on [Course_Id] in table 'CourseScore'
+ALTER TABLE [dbo].[CourseScore]
+ADD CONSTRAINT [FK_CourseScore_Course]
+    FOREIGN KEY ([Course_Id])
+    REFERENCES [dbo].[Course]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [Score_Id] in table 'CourseScore'
+ALTER TABLE [dbo].[CourseScore]
+ADD CONSTRAINT [FK_CourseScore_Score]
+    FOREIGN KEY ([Score_Id])
+    REFERENCES [dbo].[Score]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CourseScore_Score'
+CREATE INDEX [IX_FK_CourseScore_Score]
+ON [dbo].[CourseScore]
+    ([Score_Id]);
 GO
 
 -- --------------------------------------------------

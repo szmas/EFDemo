@@ -12,19 +12,16 @@ namespace Test
     using System;
     using System.Collections.Generic;
     
-    public partial class 仓位
+    public partial class Course
     {
-        public 仓位()
+        public Course()
         {
-            this.采购入库 = new HashSet<采购入库>();
-            this.退货入库 = new HashSet<退货入库>();
+            this.Score = new HashSet<Score>();
         }
     
-        public string Store { get; set; }
-        public string Description { get; set; }
-        public Nullable<bool> ItemPlan { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual ICollection<采购入库> 采购入库 { get; set; }
-        public virtual ICollection<退货入库> 退货入库 { get; set; }
+        public virtual ICollection<Score> Score { get; set; }
     }
 }

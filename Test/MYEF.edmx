@@ -11,13 +11,24 @@
     <EntitySet Name="Student" EntityType="MYEF.Store.Student" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StudentAddress" EntityType="MYEF.Store.StudentAddress" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Person" EntityType="MYEF.Store.Person" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Course" EntityType="MYEF.Store.Course" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Score" EntityType="MYEF.Store.Score" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CourseScore" EntityType="MYEF.Store.CourseScore" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="StudentStudentAddress" Association="MYEF.Store.StudentStudentAddress">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="StudentAddress" EntitySet="StudentAddress" />
+    </AssociationSet>
     <AssociationSet Name="ProductProductType" Association="MYEF.Store.ProductProductType">
       <End Role="Product" EntitySet="Product" />
       <End Role="ProductType" EntitySet="ProductType" />
     </AssociationSet>
-    <AssociationSet Name="StudentStudentAddress" Association="MYEF.Store.StudentStudentAddress">
-      <End Role="Student" EntitySet="Student" />
-      <End Role="StudentAddress" EntitySet="StudentAddress" />
+    <AssociationSet Name="FK_CourseScore_Course" Association="MYEF.Store.FK_CourseScore_Course">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="CourseScore" EntitySet="CourseScore" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseScore_Score" Association="MYEF.Store.FK_CourseScore_Score">
+      <End Role="Score" EntitySet="Score" />
+      <End Role="CourseScore" EntitySet="CourseScore" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Product">
@@ -25,19 +36,22 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ProductTypeId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProductType_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProductType">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Student">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="StudentAddress_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="StudentAddress">
@@ -45,25 +59,37 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Person">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <Association Name="ProductProductType">
-    <End Role="Product" Type="MYEF.Store.Product" Multiplicity="*" />
-    <End Role="ProductType" Type="MYEF.Store.ProductType" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="ProductType">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Product">
-        <PropertyRef Name="ProductTypeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Score">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CourseScore">
+    <Key>
+      <PropertyRef Name="Course_Id" />
+      <PropertyRef Name="Score_Id" />
+    </Key>
+    <Property Name="Course_Id" Type="int" Nullable="false" />
+    <Property Name="Score_Id" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="StudentStudentAddress">
     <End Role="Student" Type="MYEF.Store.Student" Multiplicity="*" />
     <End Role="StudentAddress" Type="MYEF.Store.StudentAddress" Multiplicity="1" />
@@ -76,6 +102,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ProductProductType">
+    <End Role="Product" Type="MYEF.Store.Product" Multiplicity="*" />
+    <End Role="ProductType" Type="MYEF.Store.ProductType" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ProductType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductType_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseScore_Course">
+    <End Role="Course" Type="MYEF.Store.Course" Multiplicity="1" />
+    <End Role="CourseScore" Type="MYEF.Store.CourseScore" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseScore">
+        <PropertyRef Name="Course_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseScore_Score">
+    <End Role="CourseScore" Type="MYEF.Store.CourseScore" Multiplicity="*" />
+    <End Role="Score" Type="MYEF.Store.Score" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Score">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseScore">
+        <PropertyRef Name="Score_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -83,17 +145,23 @@
         <EntityContainer Name="MYEFContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Product" EntityType="MYEF.Product" />
           <EntitySet Name="ProductType" EntityType="MYEF.ProductType" />
-          <AssociationSet Name="ProductProductType" Association="MYEF.ProductProductType">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductType" EntitySet="ProductType" />
-          </AssociationSet>
           <EntitySet Name="Student" EntityType="MYEF.Student" />
           <EntitySet Name="StudentAddress" EntityType="MYEF.StudentAddress" />
+          <EntitySet Name="Person" EntityType="MYEF.Person" />
           <AssociationSet Name="StudentStudentAddress" Association="MYEF.StudentStudentAddress">
             <End Role="Student" EntitySet="Student" />
             <End Role="StudentAddress" EntitySet="StudentAddress" />
           </AssociationSet>
-          <EntitySet Name="Person" EntityType="MYEF.Person" />
+          <AssociationSet Name="ProductProductType" Association="MYEF.ProductProductType">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductType" EntitySet="ProductType" />
+          </AssociationSet>
+          <EntitySet Name="Course" EntityType="MYEF.Course" />
+          <EntitySet Name="Score" EntityType="MYEF.Score" />
+          <AssociationSet Name="CourseScore" Association="MYEF.CourseScore">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Score" EntitySet="Score" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Product">
           <Key>
@@ -101,7 +169,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="ProductType" Relationship="MYEF.ProductProductType" FromRole="Product" ToRole="ProductType" />
-          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -109,25 +177,15 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Product" Relationship="MYEF.ProductProductType" FromRole="ProductType" ToRole="Product" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
-        <Association Name="ProductProductType">
-          <End Type="MYEF.Product" Role="Product" Multiplicity="*" />
-          <End Type="MYEF.ProductType" Role="ProductType" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="ProductType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="ProductTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Student">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="StudentAddress" Relationship="MYEF.StudentStudentAddress" FromRole="Student" ToRole="StudentAddress" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="StudentAddress">
           <Key>
@@ -135,17 +193,43 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Student" Relationship="MYEF.StudentStudentAddress" FromRole="StudentAddress" ToRole="Student" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
-        <Association Name="StudentStudentAddress">
-          <End Type="MYEF.Student" Role="Student" Multiplicity="1" />
-          <End Type="MYEF.StudentAddress" Role="StudentAddress" Multiplicity="1" />
-        </Association>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
         </EntityType>
+        <Association Name="StudentStudentAddress">
+          <End Type="MYEF.Student" Role="Student" Multiplicity="1" />
+          <End Type="MYEF.StudentAddress" Role="StudentAddress" Multiplicity="1" />
+        </Association>
+        <Association Name="ProductProductType">
+          <End Type="MYEF.Product" Role="Product" Multiplicity="*" />
+          <End Type="MYEF.ProductType" Role="ProductType" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Score" Relationship="MYEF.CourseScore" FromRole="Course" ToRole="Score" />
+          <Property Name="Name" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Score">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Course" Relationship="MYEF.CourseScore" FromRole="Score" ToRole="Course" />
+          <Property Name="Name" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CourseScore">
+          <End Type="MYEF.Course" Role="Course" Multiplicity="*" />
+          <End Type="MYEF.Score" Role="Score" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -156,7 +240,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(MYEF.Product)">
         <MappingFragment StoreEntitySet="Product">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -164,6 +248,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(MYEF.ProductType)">
         <MappingFragment StoreEntitySet="ProductType">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -171,6 +256,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(MYEF.Student)">
         <MappingFragment StoreEntitySet="Student">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -178,6 +264,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(MYEF.StudentAddress)">
         <MappingFragment StoreEntitySet="StudentAddress">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -185,6 +272,23 @@
       <EntityTypeMapping TypeName="IsTypeOf(MYEF.Person)">
         <MappingFragment StoreEntitySet="Person">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Course">
+      <EntityTypeMapping TypeName="IsTypeOf(MYEF.Course)">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Score">
+      <EntityTypeMapping TypeName="IsTypeOf(MYEF.Score)">
+        <MappingFragment StoreEntitySet="Score">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -194,6 +298,22 @@
       </EndProperty>
       <EndProperty Name="Student">
         <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductProductType" TypeName="MYEF.ProductProductType" StoreEntitySet="Product">
+      <EndProperty Name="ProductType">
+        <ScalarProperty Name="Id" ColumnName="ProductType_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CourseScore" TypeName="MYEF.CourseScore" StoreEntitySet="CourseScore">
+      <EndProperty Name="Course">
+        <ScalarProperty Name="Id" ColumnName="Course_Id" />
+      </EndProperty>
+      <EndProperty Name="Score">
+        <ScalarProperty Name="Id" ColumnName="Score_Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
@@ -209,7 +329,7 @@
     <edmx:Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>

@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,14 +52,73 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Course.cs">
+      <DependentUpon>MYEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Demo.cs" />
     <Compile Include="MasContext.cs" />
+    <Compile Include="MYEF.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MYEF.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MYEF.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MYEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MYEF.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MYEF.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Person.cs">
+      <DependentUpon>MYEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>MYEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductType.cs">
+      <DependentUpon>MYEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Score.cs">
+      <DependentUpon>MYEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student.cs">
+      <DependentUpon>MYEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StudentAddress.cs">
+      <DependentUpon>MYEF.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="MYEF.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MYEF.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MYEF.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MYEF.Context.cs</LastGenOutput>
+      <DependentUpon>MYEF.edmx</DependentUpon>
+    </None>
+    <None Include="MYEF.edmx.diagram">
+      <DependentUpon>MYEF.edmx</DependentUpon>
+    </None>
+    <None Include="MYEF.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MYEF.cs</LastGenOutput>
+      <DependentUpon>MYEF.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MYEF.edmx.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

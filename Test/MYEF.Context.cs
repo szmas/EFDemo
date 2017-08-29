@@ -13,10 +13,10 @@ namespace Test
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class qds236354159_dbEntities6 : DbContext
+    public partial class MYEFContainer : DbContext
     {
-        public qds236354159_dbEntities6()
-            : base("name=qds236354159_dbEntities6")
+        public MYEFContainer()
+            : base("name=MYEFContainer")
         {
         }
     
@@ -25,12 +25,12 @@ namespace Test
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<PreSale> PreSale { get; set; }
-        public virtual DbSet<PreSaleDetail> PreSaleDetail { get; set; }
-        public virtual DbSet<备货单> 备货单 { get; set; }
-        public virtual DbSet<备货单明细> 备货单明细 { get; set; }
-        public virtual DbSet<采购单> 采购单 { get; set; }
-        public virtual DbSet<采购单明细> 采购单明细 { get; set; }
-        public virtual DbSet<采购入库> 采购入库 { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ProductType> ProductType { get; set; }
+        public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<StudentAddress> StudentAddress { get; set; }
+        public virtual DbSet<Person> Person { get; set; }
+        public virtual DbSet<Course> Course { get; set; }
+        public virtual DbSet<Score> Score { get; set; }
     }
 }
