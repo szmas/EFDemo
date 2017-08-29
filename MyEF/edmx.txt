@@ -1,0 +1,26 @@
+﻿如果数据库中的表名称是复数形式，则复数或单数化生成的对象名称复选框会将实体集名称复选为单个
+
+使所有 EntityType 名称采用单数形式。 
+
+使所有 EntitySet 名称采用复数形式。 
+
+对于每个最多返回一个实体的 NavigationProperty，使名称采用单数形式。 
+
+对于每个返回多个实体的 NavigationProperty，使名称采用复数形式。 
+
+实体数据模型向导通过创建 PluralizationService 并将其传递到 EntityModelSchemaGenerator 对单复数形式应用英语语言规则。
+
+
+
+在模型中包含外键列
+
+
+显式地包含外键属性来表示外键。例如，Student表与Standard表具有一对多的关系。
+所以每个学生都只有一个标准。要在模型中表示，Student实体集包括带有标准导航属性的StandardId属性。
+如果未选中此复选框，则只会包含“标准”属性，但不包括“Student”实体集中的StandardId。
+
+
+
+选定的存储过程和函数导入实体模型
+
+自动为存储过程和函数创建函数导入。在Entity Framework 5.0之前，您不需要手动导入。
