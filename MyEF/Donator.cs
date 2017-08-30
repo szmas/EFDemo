@@ -34,6 +34,10 @@ namespace MyEF
          */
 
 
+        /// <summary>
+        /// 默认情况下属性被命名为ID、id或者[ClassName]Id，将映射为数据表中的主键
+        /// 如果没有类似的命名，并且也未显示指明主键，则生成失败，引发异常
+        /// </summary>
         [Key]
         [Column("Id")]
         public int DonatorId { get; set; }
@@ -42,6 +46,9 @@ namespace MyEF
         public decimal Amount { get; set; }
         public DateTime DonateDate { get; set; }
 
+        /// <summary>
+        /// virtual表示该列表为延迟加载
+        /// </summary>
         public virtual ICollection<PayWay> PayWays { get; set; }
     }
 }

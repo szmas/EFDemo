@@ -15,6 +15,9 @@ namespace MyEF
         [MaxLength(8, ErrorMessage = "支付方式的名称长度不能大于8")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// 延迟加载Donator
+        /// </summary>
         public virtual Donator donator { get; set; }
     }
 }
