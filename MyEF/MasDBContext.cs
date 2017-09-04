@@ -34,7 +34,11 @@ namespace MyEF
 
 
             modelBuilder.Entity<Donator>().ToTable("Donators").HasKey(m => m.DonatorId);//映射到表Donators,DonatorId当作主键对待
+
             modelBuilder.Entity<Donator>().Property(m => m.DonatorId).HasColumnName("Id");//映射到数据表中的主键名为Id而不是DonatorId
+
+            modelBuilder.Entity<Donator>().ToTable("Donators").Map(  //将关系配置为使用在对象模型中的外键属性。如果未在对象模型中公开外键属性
+
             modelBuilder.Entity<Donator>().Property(m => m.Name)
                 .IsRequired()//设置Name是必须的，即不为null,默认是可为null的
                 .IsUnicode()//设置Name列为Unicode字符，实际上默认就是unicode,所以该方法可不写
