@@ -23,10 +23,10 @@ namespace OneToOne
             //Ignore(p => p.Description);
 
 
-            this.HasKey(p => p.PersonId);  //主键
-            this.Property(p => p.Name).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            //this.Property(p => p.RowVersion).IsRowVersion();  //时间戳
-            this.Property(p => p.Name).IsConcurrencyToken();  //ConcurrencyCheck并发
+            //this.HasKey(p => p.PersonId);  //主键
+            //this.Property(p => p.Name).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            ////this.Property(p => p.RowVersion).IsRowVersion();  //时间戳
+            //this.Property(p => p.Name).IsConcurrencyToken();  //ConcurrencyCheck并发
         }
     }
 }
