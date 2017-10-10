@@ -10,6 +10,7 @@ namespace OneToMany
 {
 
     /// <summary>
+    /// 子表（外键是主表的主键）
     /// 子类是Many ,父类是One  构成了OneToMany  一对多
     /// 如果外键可以为空，0或1对*
     /// </summary>

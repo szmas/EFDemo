@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace OneToMany
 {
     /// <summary>
+    /// 主表（主键是子表的外键）
     /// 父类是One,子类是Many 构成了OneToMany  一对多
     /// 如果外键可以为空，0或1对*
     /// </summary>
