@@ -29,6 +29,30 @@ namespace ManyToMany
 
         static void Main(string[] args)
         {
+
+            using (MasContext db = new MasContext())
+            {
+                Menu menu = new Menu();
+                menu.Name = "系统管理";
+                menu.AddTime = DateTime.Now;
+                menu.Remark = "系统管理";
+                menu.Icon = "system.icon";
+                menu.PID = 0;
+                menu.Link = "/system/index.aspx";
+
+                db.Menu.Add(menu);
+
+
+                Role role = new Role();
+
+                role.Name = "管理员";
+                role.Remark = "管理员";
+                role.AddTime = DateTime.Now;
+
+                db.Role.Add(role);
+
+                db.SaveChanges();
+            }
         }
     }
 }

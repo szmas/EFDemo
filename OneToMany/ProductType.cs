@@ -23,6 +23,7 @@ namespace OneToMany
 
         /// <summary>
         /// virtual 延迟加载
+        /// 一个分类对应多个产品（一对多的关系）
         /// </summary>
         public virtual ICollection<Product> Products { get; set; }
     }

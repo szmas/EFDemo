@@ -18,6 +18,9 @@ namespace OneToOne
         public string CollegeName { get; set; }
         public DateTime EnrollmentDate { get; set; }
 
+        /// <summary>
+        /// 一个学生对应一个人（一对一的关系）
+        /// </summary>
         public virtual Person Person { get; set; }
     }
 }

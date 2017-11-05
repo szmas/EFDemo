@@ -1,0 +1,10 @@
+﻿EntityFramework6怎样使用事务？
+
+
+EntityFramework的DbContext中的SaveChanges就自带事务与分布式事务。
+
+如果我们的语句是在同一个DbContext的实例进行提交，那么DbContext中的SaveChanges就会默认启动事务，如果有一条语句执行失败，
+那么事务就会回滚。SaveChanges不会执行。
+
+如果我们的语句是在不同的DbContext的实例中进行提交，那我们就要采用分布式事务，也就是TransactionScope来开启。
+在TransactionScope中的任意一个DbContext的SaveChanges行失败后，其他的实例的SaveChanges也不会被执行，从而达到了事务控制的目的。

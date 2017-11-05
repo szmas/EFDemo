@@ -39,6 +39,7 @@ namespace OneToMany
 
         /// <summary>
         /// virtual 延迟加载
+        /// 一个产品对应一个分类（多对一的关系）
         /// </summary>
         public virtual ProductType proType { set; get; }
     }

@@ -16,7 +16,6 @@ namespace OneToOne
     public class Person
     {
         [Key]
-
         public int PersonId { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
@@ -29,7 +28,8 @@ namespace OneToOne
         [ForeignKey("Student")]
         public int SID { get; set; }
         /// <summary>
-        /// 延迟加载
+        /// virtual 延迟加载
+        /// 一个人对应一个学生（一对一的关系）
         /// </summary>
         public virtual Student Student { get; set; }
 

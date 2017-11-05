@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyEF.延迟加载;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -13,7 +14,9 @@ namespace MyEF
         static void Main(string[] args)
         {
 
-            CRUD.Run();
+            // CRUD.Run();
+            
+            Demo.Run();
 
         }
 

@@ -1,0 +1,5 @@
+﻿IQueryable和IEnumerable都是延时执行(Deferred Execution)的，而IList是即时执行(Eager Execution)
+
+IQueryable和IEnumerable在每次执行时都必须连接数据库读取，而IList读取一次后，以后各次都不需连接数据库。前两者很容易造成重复读取，性能低下，并且可能引发数据不一致性
+
+IQueryable和IEnumerable的区别：IEnumberalb使用的是LINQ to Object方式，它会将AsEnumerable()时对应的所有记录都先加载到内存，然后在此基础上再执行后来的Query。
